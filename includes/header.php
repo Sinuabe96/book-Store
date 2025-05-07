@@ -1,6 +1,17 @@
 <?php
+
     session_start();
     define("APRURL", "http://localhost/book-Store");
+    require dirname(dirname(__FILE__)) . "/config/config.php";
+
+    if(isset($_SESSION['user_id'])) {
+        $number = $conn->query("SELECT COUNT(*) as num_products FROM cart WHERE user_id='$_SESSION[user_id]'");
+        $number->execute();
+    
+        $getNumber = $number->fetch(PDO::FETCH_OBJ);
+    
+    }
+   
 ?>
 <!doctype html>
 <html lang="en">
@@ -48,7 +59,7 @@
                         <li class="nav-item px-2">
                             <a class="nav-link text-white position-relative" href="<?php echo APRURL; ?>/shopping/cart.php">
                                 <i class="fas fa-shopping-cart"></i>
-                                <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle">2</span>
+                                <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle">(<?php echo $getNumber->num_products; ?>)</span>
                             </a>
                         </li>
 
